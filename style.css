@@ -8,4 +8,65 @@ html, body {
   height: 100%;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
 
+/* --------------- HEADER --------------- */
+
+header {
+  background-color: aquamarine;
+  display: flex;
+  align-items: center;
+}
+
+/* ----- MAIN ----- */
+
+main {
+  display: flex;
+  height: 100%;
+}
+
+/* --------------- SIDEBAR --------------- */
+
+
+aside {
+  padding: 24px 36px;
+  display: flex;
+  flex-direction: column;
+  background-color: brown;
+  min-width: 200px;
+}
+
+section {
+  margin-bottom: 64px;
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+aside ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style-type: none;
+}
+
+aside li {
+  border: 1px solid black;
+}
+
+/* --------------- CONTENT --------------- */
+
+.task-container {
+  background-color: chocolate;
+}
+
+/* --------------- FOOTER --------------- */
+
+footer {
+  background-color: darkgreen;
+}
