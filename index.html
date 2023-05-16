@@ -42,11 +42,6 @@
             <label for="task-1">Task Name</label>
           </div>
           <div class="right-section">
-            <div class="priority">
-              <button>Low</button>
-              <button>Mid</button>
-              <button>High</button>
-            </div>
             <input type="date" id="date-input">
             <img src="" alt="X">
           </div>
@@ -58,11 +53,6 @@
             <label for="task-1">Task Name</label>
           </div>
           <div class="right-section">
-            <div class="priority">
-              <button>Low</button>
-              <button>Mid</button>
-              <button>High</button>
-            </div>
             <input type="date" id="date-input">
             <img src="" alt="X">
           </div>
@@ -74,11 +64,6 @@
             <label for="task-1">Task Name</label>
           </div>
           <div class="right-section">
-            <div class="priority">
-              <button>Low</button>
-              <button>Mid</button>
-              <button>High</button>
-            </div>
             <input type="date" id="date-input">
             <img src="" alt="X">
           </div>
@@ -90,11 +75,6 @@
             <label for="task-1">Task Name</label>
           </div>
           <div class="right-section">
-            <div class="priority">
-              <button>Low</button>
-              <button>Mid</button>
-              <button>High</button>
-            </div>
             <input type="date" id="date-input">
             <img src="" alt="X">
           </div>
@@ -106,11 +86,6 @@
             <label for="task-1">Task Name</label>
           </div>
           <div class="right-section">
-            <div class="priority">
-              <button id="low">Low</button>
-              <button id="mid">Mid</button>
-              <button id="high">High</button>
-            </div>
             <input type="date" id="date-input">
             <img src="" alt="X">
           </div>
@@ -122,11 +97,10 @@
               <label for="title">Title</label>
               <input type="text" required>
               <label for="description">Description</label>
-              <input type="text">
-              <label for="due-date">Due Date</label>
-              <input type="date">
+              <input type="text" id="input-description">
+              
             </div>
-            
+
             <div class="side">
               <div class="priority">
                 <h3>Priority</h3>
@@ -138,7 +112,11 @@
           </div>
 
           <div class="bottom">
-            <button>+ADD</button>
+            <div>
+              <label for="due-date">Due Date</label>
+              <input type="date" id="input-date">
+            </div>
+            <button id="btn-add">+ADD</button>
           </div>
         </div>
       </section>
