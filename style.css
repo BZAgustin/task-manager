@@ -113,6 +113,7 @@ aside li {
 
 .top {
   display: flex;
+  align-items: center;
 }
 
 .main {
@@ -141,6 +142,12 @@ aside li {
   justify-content: center;
   align-items: center;
   width: 100%;
+  gap: 3rem;
+}
+
+#btn-add {
+  padding: 8px;
+  width: 20%;
 }
 
 
