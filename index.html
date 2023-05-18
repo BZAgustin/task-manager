@@ -19,17 +19,18 @@
       <section>
         <h2> Main </h2>
         <ul>
-          <li> <img src="" alt="X"> <span>INBOX</span></li>
-          <li> <img src="" alt="X"> <span>TODAY</span></li>
-          <li> <img src="" alt="X"> <span>THIS WEEK</span></li>
+          <li id="btn-inbox"> <img src="" alt="X"><span>INBOX</span> </li>
+          <li id="btn-today"> <img src="" alt="X"><span>TODAY</span> </li>
+          <li id="btn-week"> <img src="" alt="X"><span>THIS WEEK</span> </li>
         </ul>
       </section>
       
       <section>
         <h2> Projects </h2>
-        <ul>
-          <li> <img src="" alt="O"> Project</li>
-          <li> <img src="" alt="O"> Project 2</li>
+        <ul id="project-list">
+          <li id="btn-add-project"> <img src="" alt="+"><span>Add Project</span> </li>
+          <li> <img src="" alt="O"> <span>Project</span> </li>
+          <li> <img src="" alt="O"> <span>Project 2</span> </li>
         </ul>
       </section>
     </aside>
@@ -39,7 +40,7 @@
         <div class="task">
           <div class="left-section">
             <input type="checkbox" id="task-checkbox">
-            <label for="task-1">Task Name</label>
+            <label for="task-1" id="task-1">Task Name</label>
           </div>
           <div class="right-section">
             <input type="date" id="date-input">
@@ -90,23 +91,25 @@
             <img src="" alt="X">
           </div>
         </div>
+
+        <button id="btn-new-task">+ Add Task</button>
 
         <div class="create-task">
           <div class="top">
             <div class="main">
               <label for="title">Title</label>
-              <input type="text" required>
+              <input type="text" id="title-input">
               <label for="description">Description</label>
-              <input type="text" id="input-description">
+              <input type="text" id="description-input">
               
             </div>
 
             <div class="side">
               <div class="priority">
                 <h3>Priority</h3>
-                <button>Low</button>
-                <button>Mid</button>
-                <button>High</button>
+                <button id="btn-low">Low</button>
+                <button id="btn-mid">Mid</button>
+                <button id="btn-high">High</button>
               </div>
             </div>
           </div>
@@ -114,9 +117,9 @@
           <div class="bottom">
             <div>
               <label for="due-date">Due Date</label>
-              <input type="date" id="input-date">
+              <input type="date" id="date-input">
             </div>
-            <button id="btn-add">+ADD</button>
+            <button id="btn-add-task">+ADD</button>
           </div>
         </div>
       </section>
