@@ -1,8 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import Task from './task';
-import Project from './project';
-import DOM from './display';
+import { DOM, taskFactory} from './display';
 
-// --------------- APP LOGIC --------------- //
+const display = DOM();
 
-const taskOne = new Task('Do homework', '', '', 'Low', false);
+const taskOne = taskFactory('name', 'date', '1');
+const taskTwo = taskFactory('name', new Date('12/03/1994'), '2');
+
+display.taskListAdd(taskOne);
+display.taskListAdd(taskTwo);
