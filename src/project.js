@@ -1,25 +1,39 @@
+/* eslint-disable no-underscore-dangle */
 class Project {
-  constructor() {
+  constructor(name) {
+    this.name = name;
     this.myTasks = [];
     this.isComplete = false;
   }
 
   static myProjects = [];
 
-  get tasks() {
-    return this.myTasks;
+  get name() {
+    return this._name;
+  }
+
+  set name(value) {
+    this._name = value;
+  }
+
+  get myTasks() {
+    return this._myTasks;
+  }
+
+  set myTasks(list) {
+    this._myTasks = list;
   }
 
   addTask(task) {
     this.myTasks.push(task);
   }
 
-  get complete() {
-    return this.isComplete;
+  get isComplete() {
+    return this._isComplete;
   }
 
-  set complete(status) {
-    this.isComplete = status;
+  set isComplete(status) {
+    this._isComplete = status;
   }
 }
 
