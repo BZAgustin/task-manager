@@ -3,6 +3,7 @@
 const taskDivFactory = (name, dueDate, taskId) => {
     const task = document.createElement('div');
     task.classList.add('task');
+    task.id = `task-${taskId}` ;
 
     const leftSection = document.createElement('div');
     const rightSection = document.createElement('div');
@@ -11,9 +12,8 @@ const taskDivFactory = (name, dueDate, taskId) => {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.id = 'task-checkbox';
+    checkbox.id = `task-${taskId}-checkbox`;
     const label = document.createElement('label');
-    label.id = `task-${taskId}`;
     label.innerHTML = name;
 
     leftSection.appendChild(checkbox);
@@ -34,9 +34,9 @@ const taskDivFactory = (name, dueDate, taskId) => {
     return task;
 };
 
-const projectDivFactory = (name, id) => {
+const projectDivFactory = (name, projectId) => {
   const project = document.createElement('li');
-  project.id = `project-${id}`;
+  project.id = `project-${projectId}`;
   const projectIcon = document.createElement('img');
   projectIcon.alt = 'O';
   const projectName = document.createElement('span');
@@ -52,7 +52,11 @@ const DOM = () => {
   const btnInbox = document.getElementById('btn-inbox');
   const btnToday = document.getElementById('btn-today');
   const btnWeek = document.getElementById('btn-week');
+  
+  // Add new project
   const btnNewProject = document.getElementById('btn-new-project');
+  const projectNameInput = document.getElementById('project-name-input');
+  const btnConfirmProject = document.getElementById('btn-confirm-project-name');
 
   // Task List
   const btnNewTask = document.getElementById('btn-new-task');
@@ -70,8 +74,8 @@ const DOM = () => {
   const projectListParent = document.getElementById('project-list');
   const taskListParent = document.querySelector('.task-list');
 
-  // Methods
-  function getTitle() {
+  // Methods (tasks)
+  function getTaskName() {
     return title.value;
   }
 
@@ -111,10 +115,14 @@ const DOM = () => {
     }
   }
 
-  return { btnInbox, btnToday, btnWeek, btnNewProject, btnNewTask, btnLow, 
-           btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTitle,  
-           getDescription, getDate, taskListAdd, projectListAdd, showTasks, showProjects }
-};
+  // Methods (projects)
+  function getProjectName() {
+    return projectNameInput.value;
+  }
 
+  return { btnInbox, btnToday, btnWeek, btnNewProject, projectNameInput, btnConfirmProject, btnNewTask, 
+           btnLow, btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTaskName, 
+           getProjectName, getDescription, getDate, taskListAdd, projectListAdd, showTasks, showProjects };
+};
 
 export default DOM;
