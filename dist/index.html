@@ -34,9 +34,18 @@
       </section>
 
       <li id="btn-new-project"> <img src="" alt="+"><span>New Project</span> </li>
+
+      <div class="project-name-input">
+        <label for="project-name">Name</label>
+        <input type="text" id="project-name-input">
+        <button id="btn-confirm-project-name">Ok</button>
+        <button>Cancel</button>
+      </div>
     </aside>
 
     <div class="task-container">
+      <h1 id="task-list-title">Inbox</h1>
+
       <section class="task-list">
         <!-- Tasks go here -->
       </section>
@@ -68,7 +77,7 @@
               <label for="due-date">Due Date</label>
               <input type="date" id="date-input">
             </div>
-            <button id="btn-add-task">+ADD</button>
+            <button type="submit" id="btn-add-task">+ ADD</button>
           </div>
         </div>
     </div>
