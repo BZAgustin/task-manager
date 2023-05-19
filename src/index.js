@@ -1,25 +1,24 @@
 /* eslint-disable max-classes-per-file */
-import { format, isToday, isThisWeek } from 'date-fns';
-import DOM from './display';
-import Task from './task';
-import Project from './project';
+import loadApp from './eventController';
 
-const defaultProject = new Project('Default Project');
+loadApp();
 
-const display = DOM();
+// const defaultProject = new Project('Default Project');
 
-const taskOne = new Task('Do Homework', 'just do your homework man', format(new Date('1994-12-01T03:00:00'), 'dd/MM/yyyy'), '', false);
-Task.myTasks.push(taskOne);
+// const display = DOM();
 
-const taskTwo = new Task('Shower', 'just shower man', format(new Date('1994-11-05T12:00:00'), 'dd/MM/yyyy'), '', false);
-Task.myTasks.push(taskTwo);
+// const taskOne = new Task('Do Homework', 'just do your homework man', format(new Date('1994-12-01T03:00:00'), 'dd/MM/yyyy'), '', false);
+// Task.myTasks.push(taskOne);
 
-const projectOne = new Project('Project 1');
+// const taskTwo = new Task('Shower', 'just shower man', format(new Date('1994-11-05T12:00:00'), 'dd/MM/yyyy'), '', false);
+// Task.myTasks.push(taskTwo);
 
-projectOne.addTask(taskOne);
-projectOne.addTask(taskTwo);
+// const projectOne = new Project('Project 1');
 
-Project.myProjects.push(projectOne);
+// projectOne.addTask(taskOne);
+// projectOne.addTask(taskTwo);
 
-display.showTasks(Task.myTasks);
-display.showProjects(Project.myProjects);
+// Project.myProjects.push(projectOne);
+
+// display.showTasks(Task.myTasks);
+// display.showProjects(Project.myProjects);
