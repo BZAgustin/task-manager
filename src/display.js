@@ -20,7 +20,7 @@ const taskDivFactory = (name, dueDate, taskId) => {
     leftSection.appendChild(label);
 
     const date = document.createElement('span');
-    date.innerHTML = `Due Date: ${dueDate.getDate() + 1}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+    date.innerHTML = `Due Date: ${dueDate.getUTCDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
 
     const edit = document.createElement('img');
     edit.alt = 'Edit';
@@ -112,7 +112,7 @@ const DOM = () => {
     }
 
     for(const task of list) {
-      taskListAdd(taskDivFactory(task.name, task.dueDate, list.indexOf(task)+1));
+      taskListAdd(taskDivFactory(task.name, task.dueDate, list.indexOf(task)));
     }
   }
 
@@ -122,7 +122,7 @@ const DOM = () => {
     }
 
     for(const project of list) {
-      projectListAdd(projectDivFactory(project.name, list.indexOf(project)+1));
+      projectListAdd(projectDivFactory(project.name, list.indexOf(project)));
     }
   }
 
