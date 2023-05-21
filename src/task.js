@@ -7,8 +7,6 @@ class Task {
     this.taskCompleted = completed;
   }
 
-  static myTasks = [];
-
   get name() {
     return this.taskName;
   }
