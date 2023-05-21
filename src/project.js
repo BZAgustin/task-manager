@@ -33,6 +33,10 @@ class Project {
   set isComplete(status) {
     this._isComplete = status;
   }
+
+  removeTask(task) {
+    this.myTasks.splice(this.myTasks.indexOf(task), 1);
+  };
 }
 
 export default Project;
