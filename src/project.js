@@ -6,8 +6,6 @@ class Project {
     this.isComplete = false;
   }
 
-  static myProjects = [];
-
   get name() {
     return this._name;
   }
