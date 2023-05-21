@@ -20,13 +20,19 @@ const taskDivFactory = (name, dueDate, taskId) => {
     leftSection.appendChild(label);
 
     const date = document.createElement('span');
-    date.innerHTML = `Due Date: ${dueDate}`;
+    date.innerHTML = `Due Date: ${dueDate.getDate() + 1}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
 
     const edit = document.createElement('img');
-    edit.alt = 'X';
+    edit.alt = 'Edit';
+    edit.id = `edit-task-${taskId}`;
+
+    const remove = document.createElement('img');
+    remove.alt = 'X';
+    remove.id = `remove-task-${taskId}`;
 
     rightSection.appendChild(date);
     rightSection.appendChild(edit);
+    rightSection.appendChild(remove);
 
     task.appendChild(leftSection);
     task.appendChild(rightSection);
@@ -61,7 +67,7 @@ const DOM = () => {
   // Task List
   const btnNewTask = document.getElementById('btn-new-task');
 
-  // Create Task Form
+  // 'Create Task' Form
   const title = document.getElementById('title-input');
   const description = document.getElementById('description-input');
   const date = document.getElementById('date-input');
@@ -73,6 +79,11 @@ const DOM = () => {
   // Parent Nodes
   const projectListParent = document.getElementById('project-list');
   const taskListParent = document.querySelector('.task-list');
+
+  // Methods (projects)
+  function getProjectName() {
+    return projectNameInput.value;
+  }
 
   // Methods (tasks)
   function getTaskName() {
@@ -113,11 +124,6 @@ const DOM = () => {
     for(const project of list) {
       projectListAdd(projectDivFactory(project.name, list.indexOf(project)+1));
     }
-  }
-
-  // Methods (projects)
-  function getProjectName() {
-    return projectNameInput.value;
   }
 
   return { btnInbox, btnToday, btnWeek, btnNewProject, projectNameInput, btnConfirmProject, btnNewTask, 
