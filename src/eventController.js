@@ -6,14 +6,12 @@ import Project from './project';
 
 const display = DOM();
 
-const defaultProject = new Project('Default Project');
+const defaultProject = new Project('Default');
 
 const projectManager = {
   projects: [],
-  activeProject: null
+  activeProject: defaultProject
 }
-
-projectManager.activeProject = defaultProject;
 
 function getAllTasks() {
   const tasks = [];
@@ -27,6 +25,7 @@ function getAllTasks() {
   return tasks.flat();
 }
 
+
 function isToday(date) {
   const currentDate = new Date().getDate();
   return date.getDate() === currentDate;
@@ -36,11 +35,32 @@ function isThisWeek(date) {
   const currentDate = new Date();
   const weekStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - currentDate.getDay());
   const weekEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + (6 - currentDate.getDay()));
-
+  
   return date >= weekStart && date <= weekEnd;
 }
 
-function plugListeners() {
+function removeTaskHandler(list, index) {
+  return function() {
+    projectManager.activeProject.removeTask(projectManager.activeProject.myTasks[index]);
+    list[index].remove();
+  };
+}
+
+function hookTaskListeners() {
+  const taskList = Array.from(display.taskListParent.childNodes);
+  for(let i = 0; i < taskList.length; i++) {
+    const removeButton = document.getElementById(`remove-task-${i}`);
+    removeButton.removeEventListener('click', removeTaskHandler);
+    removeButton.addEventListener('click', removeTaskHandler(taskList, i));
+  }
+}
+
+function refreshTaskList(newList) {
+  display.showTasks(newList);
+  hookTaskListeners();
+}
+
+function hookMenuListeners() {
   display.btnAddTask.addEventListener('click', (e) => {
     e.preventDefault();
     if(display.getTaskName() !== '') {
@@ -49,7 +69,7 @@ function plugListeners() {
       const date = new Date(`${display.getDate()}`);
       const task = new Task(name, description, date, '', false);
       defaultProject.myTasks.push(task);
-      display.showTasks(defaultProject.myTasks);
+      refreshTaskList(defaultProject.myTasks);
     }
   });
   
@@ -60,24 +80,24 @@ function plugListeners() {
       display.showProjects(projectManager.projects);
     }
   });
-
+  
   display.btnInbox.addEventListener('click', () => {
-    display.showTasks(defaultProject.myTasks);
+    refreshTaskList(defaultProject.myTasks);
   });
-
+  
   display.btnToday.addEventListener('click', () => {
     const todayTasks = getAllTasks().filter(task => isToday(task.taskDueDate));
-    display.showTasks(todayTasks);
+    refreshTaskList(todayTasks);
   });
-
+  
   display.btnWeek.addEventListener('click', () => {
     const weekTasks = getAllTasks().filter(task => isThisWeek(task.taskDueDate));
-    display.showTasks(weekTasks);
+    refreshTaskList(weekTasks);
   });
 }
 
 function loadApp() {
-  plugListeners();
+  hookMenuListeners();
 }
 
 export default loadApp;
