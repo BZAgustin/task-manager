@@ -1,50 +1,60 @@
+/* eslint-disable no-underscore-dangle */
 class Task {
-  constructor(name, description, dueDate, priority, completed) {
-    this.taskName = name;
-    this.taskDescription = description;
-    this.taskDueDate = dueDate;
-    this.taskPriority = priority;
-    this.taskCompleted = completed;
+  constructor(name, description, dueDate, priority, completed, visible = false) {
+    this.name = name;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.completed = completed;
+    this.visible = visible;
   }
 
   get name() {
-    return this.taskName;
+    return this._name;
   }
   
   set name(newName) {
-    this.taskName = newName;
+    this._name = newName;
   }
 
   get description() {
-    return this.taskDescription;
+    return this._description;
   }
 
   set description(newDescription) {
-    this.taskDescription = newDescription;
+    this._description = newDescription;
   }
 
   get dueDate() {
-    return this.taskDueDate;
+    return this._dueDate;
   }
 
   set dueDate(date) {
-    this.taskDueDate = date;
+    this._dueDate = date;
   }
 
   get priority() {
-    return this.taskPriority;
+    return this._priority;
   }
 
   set priority(newPriority) {
-    this.taskPriority = newPriority;
+    this._priority = newPriority;
   }
 
   get completed() {
-    return this.taskCompleted;
+    return this._completed;
   }
 
   set completed(complete) {
-    this.taskCompleted = complete;
+    this._completed = complete;
+  }
+
+  get visible() {
+    return this._visible;
+  }
+
+  set visible(mode) {
+    this._visible = mode;
   }
 }
 
