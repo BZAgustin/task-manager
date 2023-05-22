@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
-const taskDivFactory = (name, dueDate, taskId) => {
+const taskDivFactory = (name, dueDate, taskId, editHandler, removeHandler) => {
     const task = document.createElement('div');
     task.classList.add('task');
     task.id = `task-${taskId}` ;
@@ -23,10 +24,12 @@ const taskDivFactory = (name, dueDate, taskId) => {
     date.innerHTML = `Due Date: ${dueDate.getUTCDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
 
     const edit = document.createElement('img');
+    edit.addEventListener('click', editHandler);
     edit.alt = 'Edit';
     edit.id = `edit-task-${taskId}`;
 
     const remove = document.createElement('img');
+    remove.addEventListener('click', removeHandler);
     remove.alt = 'X';
     remove.id = `remove-task-${taskId}`;
 
@@ -61,6 +64,7 @@ const DOM = () => {
   
   // Add new project
   const btnNewProject = document.getElementById('btn-new-project');
+  const inputContainer = document.getElementById('input-container');
   const projectNameInput = document.getElementById('project-name-input');
   const btnConfirmProject = document.getElementById('btn-confirm-project-name');
 
@@ -68,6 +72,7 @@ const DOM = () => {
   const btnNewTask = document.getElementById('btn-new-task');
 
   // 'Create Task' Form
+  const container = document.querySelector('.create-task');
   const title = document.getElementById('title-input');
   const description = document.getElementById('description-input');
   const date = document.getElementById('date-input');
@@ -75,6 +80,14 @@ const DOM = () => {
   const btnMid = document.getElementById('btn-mid');
   const btnHigh = document.getElementById('btn-high');
   const btnAddTask = document.getElementById('btn-add-task');
+
+
+  // 'Edit Task' Form
+  const taskOverlay = document.querySelector('.overlay-container');
+  const titleEdit = document.getElementById('title-input-edit');
+  const descriptionEdit = document.getElementById('description-input-edit');
+  const dateEdit = document.getElementById('date-input-edit');
+  const btnConfirmEdit = document.getElementById('btn-confirm-edit');
 
   // Parent Nodes
   const projectListParent = document.getElementById('project-list');
@@ -90,45 +103,29 @@ const DOM = () => {
     return title.value;
   }
 
+  function setTaskName(newName) {
+    title.value = newName;
+  }
+
   function getDescription() {
     return description.value;
+  }
+
+  function setDescription(newDescription) {
+    description.value = newDescription;
   }
 
   function getDate() {
     return date.value;
   }
 
-  function taskListAdd(task) {
-    taskListParent.appendChild(task);
+  function setDate(newDate) {
+    date.value = newDate;
   }
 
-  function projectListAdd(project) {
-    projectListParent.appendChild(project);
-  }
-
-  function showTasks(list) {
-    while(taskListParent.firstChild) {
-      taskListParent.removeChild(taskListParent.firstChild);
-    }
-
-    for(const task of list) {
-      taskListAdd(taskDivFactory(task.name, task.dueDate, list.indexOf(task)));
-    }
-  }
-
-  function showProjects(list) {
-    while(projectListParent.firstChild) {
-      projectListParent.removeChild(projectListParent.firstChild);
-    }
-
-    for(const project of list) {
-      projectListAdd(projectDivFactory(project.name, list.indexOf(project)));
-    }
-  }
-
-  return { btnInbox, btnToday, btnWeek, btnNewProject, projectNameInput, btnConfirmProject, btnNewTask, 
-           btnLow, btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTaskName, 
-           getProjectName, getDescription, getDate, taskListAdd, projectListAdd, showTasks, showProjects };
+  return { btnInbox, btnToday, btnWeek, btnNewProject, container, inputContainer, projectNameInput, taskOverlay, btnConfirmProject, btnNewTask,
+           btnLow, btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTaskName, setTaskName, getProjectName, getDescription, 
+           setDescription, getDate, setDate, titleEdit, taskDivFactory, projectDivFactory, descriptionEdit, dateEdit, btnConfirmEdit };
 };
 
 export default DOM;

@@ -1,3 +1,6 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
 import DOM from './display';
@@ -13,6 +16,19 @@ const projectManager = {
   activeProject: defaultProject
 }
 
+const taskManager = {
+  activeTask: undefined,
+  currentPriority: 'low'
+}
+
+function taskListAdd(task) {
+  display.taskListParent.appendChild(task);
+}
+
+function projectListAdd(project) {
+  display.projectListParent.appendChild(project);
+}
+
 function getAllTasks() {
   const tasks = [];
 
@@ -24,7 +40,6 @@ function getAllTasks() {
 
   return tasks.flat();
 }
-
 
 function isToday(date) {
   const currentDate = new Date().getDate();
@@ -46,19 +61,50 @@ function removeTaskHandler(list, index) {
   };
 }
 
-function hookTaskListeners() {
-  const taskList = Array.from(display.taskListParent.childNodes);
-  for(let i = 0; i < taskList.length; i++) {
-    const removeButton = document.getElementById(`remove-task-${i}`);
-    removeButton.removeEventListener('click', removeTaskHandler);
-    removeButton.addEventListener('click', removeTaskHandler(taskList, i));
+function confirmEditHandler() {
+  display.taskOverlay.style.display = 'none';
+  const task = taskManager.activeTask;
+  task.name = display.titleEdit.value;
+  task.description = display.descriptionEdit.value;
+  task.date = display.dateEdit.value;
+  refreshTaskList(projectManager.activeProject.myTasks);
+}
+
+function editTaskHandler(task) {
+  return function() {
+    display.taskOverlay.style.display = 'flex';
+    taskManager.activeTask = task;
+    display.titleEdit.value = task.name; 
+    display.descriptionEdit.value = task.description;
+    display.dateEdit.value = task.dueDate.toISOString().split('T')[0];
+  }
+}
+
+function showTasks(list) {
+  while(display.taskListParent.firstChild) {
+    display.taskListParent.removeChild(display.taskListParent.firstChild);
+  }
+
+  for(const task of list) {
+    taskManager.activeTask = task;
+    taskListAdd(display.taskDivFactory(task.name, task.dueDate, list.indexOf(task), editTaskHandler(taskManager.activeTask), removeTaskHandler(taskManager.activeTask)));
+  }
+}
+
+function showProjects(list) {
+  while(display.projectListParent.firstChild) {
+    display.projectListParent.removeChild(display.projectListParent.firstChild);
+  }
+
+  for(const project of list) {
+    projectListAdd(display.projectDivFactory(project.name, list.indexOf(project)));
   }
 }
 
 function refreshTaskList(newList) {
-  display.showTasks(newList);
-  hookTaskListeners();
+  showTasks(newList);
 }
+
 
 function hookMenuListeners() {
   display.btnAddTask.addEventListener('click', (e) => {
@@ -67,9 +113,10 @@ function hookMenuListeners() {
       const name = display.getTaskName();
       const description = display.getDescription();
       const date = new Date(`${display.getDate()}`);
-      const task = new Task(name, description, date, '', false);
+      const task = new Task(name, description, date, taskManager.currentPriority, false);
       defaultProject.myTasks.push(task);
       refreshTaskList(defaultProject.myTasks);
+      display.container.style.display = 'none';
     }
   });
   
@@ -77,7 +124,8 @@ function hookMenuListeners() {
     if(display.getProjectName() !== '') {
       const name = display.getProjectName();
       projectManager.projects.push(new Project(name));
-      display.showProjects(projectManager.projects);
+      showProjects(projectManager.projects);
+      display.inputContainer.style.display = '';
     }
   });
   
@@ -86,7 +134,7 @@ function hookMenuListeners() {
   });
   
   display.btnToday.addEventListener('click', () => {
-    const todayTasks = getAllTasks().filter(task => isToday(task.taskDueDate));
+    const todayTasks = getAllTasks().filter(task => isToday(task.dueDate));
     refreshTaskList(todayTasks);
   });
   
@@ -94,10 +142,20 @@ function hookMenuListeners() {
     const weekTasks = getAllTasks().filter(task => isThisWeek(task.taskDueDate));
     refreshTaskList(weekTasks);
   });
+
+  display.btnNewTask.addEventListener('click', () => {
+    display.container.style.display = 'flex';
+  });
+
+  display.btnNewProject.addEventListener('click', () => {
+    display.inputContainer.style.display = 'flex';
+  });
+
+  display.btnConfirmEdit.addEventListener('click', confirmEditHandler);
 }
 
 function loadApp() {
-  hookMenuListeners();
+    hookMenuListeners();
 }
 
 export default loadApp;
