@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-param-reassign */
@@ -13,12 +14,12 @@ const defaultProject = new Project('Default');
 
 const projectManager = {
   projects: [],
-  activeProject: defaultProject
+  activeProject: defaultProject,
 }
 
 const taskManager = {
   activeTask: undefined,
-  currentPriority: 'low'
+  currentPriority: 0
 }
 
 function taskListAdd(task) {
@@ -43,7 +44,7 @@ function getAllTasks() {
 
 function isToday(date) {
   const currentDate = new Date().getDate();
-  return date.getDate() === currentDate;
+  return date.getUTCDate() === currentDate;
 }
 
 function isThisWeek(date) {
@@ -52,13 +53,6 @@ function isThisWeek(date) {
   const weekEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + (6 - currentDate.getDay()));
   
   return date >= weekStart && date <= weekEnd;
-}
-
-function removeTaskHandler(list, index) {
-  return function() {
-    projectManager.activeProject.removeTask(projectManager.activeProject.myTasks[index]);
-    list[index].remove();
-  };
 }
 
 function confirmEditHandler() {
@@ -74,9 +68,11 @@ function editTaskHandler(task) {
   return function() {
     display.taskOverlay.style.display = 'flex';
     taskManager.activeTask = task;
-    display.titleEdit.value = task.name; 
+    display.titleEdit.value = task.name;
     display.descriptionEdit.value = task.description;
-    display.dateEdit.value = task.dueDate.toISOString().split('T')[0];
+    if(task.dueDate !== '') {
+      display.dateEdit.value = task.dueDate.toISOString().split('T')[0];
+    }
   }
 }
 
@@ -87,7 +83,19 @@ function showTasks(list) {
 
   for(const task of list) {
     taskManager.activeTask = task;
-    taskListAdd(display.taskDivFactory(task.name, task.dueDate, list.indexOf(task), editTaskHandler(taskManager.activeTask), removeTaskHandler(taskManager.activeTask)));
+    if(isNaN(task.dueDate.getDate())) {
+      taskListAdd(display.taskDivFactory(task.name, '', list.indexOf(task), editTaskHandler(taskManager.activeTask)));
+    } else {
+      taskListAdd(display.taskDivFactory(task.name, task.dueDate, list.indexOf(task), editTaskHandler(taskManager.activeTask)));
+    }
+  }
+
+  for(const task of Array.from(display.taskListParent.childNodes)) {
+    const remove = task.childNodes[1].childNodes[2];
+    const index = remove.dataset.index;
+    remove.addEventListener('click', () => {
+      projectManager.activeProject.removeTask(projectManager.activeProject.myTasks[index]);
+    })
   }
 }
 
@@ -99,12 +107,19 @@ function showProjects(list) {
   for(const project of list) {
     projectListAdd(display.projectDivFactory(project.name, list.indexOf(project)));
   }
+
+  for(const project of Array.from(display.projectListParent.childNodes)) {
+    const remove = project.childNodes[2];
+    const index = remove.dataset.index;
+    remove.addEventListener('click', () => {
+      projectManager.projects.splice(index, 1);
+    });
+  }
 }
 
 function refreshTaskList(newList) {
   showTasks(newList);
 }
-
 
 function hookMenuListeners() {
   display.btnAddTask.addEventListener('click', (e) => {
@@ -124,6 +139,7 @@ function hookMenuListeners() {
     if(display.getProjectName() !== '') {
       const name = display.getProjectName();
       projectManager.projects.push(new Project(name));
+      projectManager.activeProject = projectManager.projects[projectManager.projects.length-1];
       showProjects(projectManager.projects);
       display.inputContainer.style.display = '';
     }
@@ -139,7 +155,7 @@ function hookMenuListeners() {
   });
   
   display.btnWeek.addEventListener('click', () => {
-    const weekTasks = getAllTasks().filter(task => isThisWeek(task.taskDueDate));
+    const weekTasks = getAllTasks().filter(task => isThisWeek(task.dueDate));
     refreshTaskList(weekTasks);
   });
 
@@ -152,6 +168,18 @@ function hookMenuListeners() {
   });
 
   display.btnConfirmEdit.addEventListener('click', confirmEditHandler);
+
+  display.btnLow.addEventListener('click', () => {
+    taskManager.currentPriority = 0;
+  });
+
+  display.btnMid.addEventListener('click', () => {
+    taskManager.currentPriority = 1;
+  });
+
+  display.btnHigh.addEventListener('click', () => {
+    taskManager.currentPriority = 2;
+  });
 }
 
 function loadApp() {
