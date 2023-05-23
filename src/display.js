@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
-const taskDivFactory = (name, dueDate, taskId, editHandler, removeHandler) => {
+const taskDivFactory = (name, dueDate, taskId, editHandler) => {
     const task = document.createElement('div');
     task.classList.add('task');
-    task.id = `task-${taskId}` ;
+    task.id = `task-${taskId}`;
 
     const leftSection = document.createElement('div');
     const rightSection = document.createElement('div');
@@ -21,15 +21,22 @@ const taskDivFactory = (name, dueDate, taskId, editHandler, removeHandler) => {
     leftSection.appendChild(label);
 
     const date = document.createElement('span');
-    date.innerHTML = `Due Date: ${dueDate.getUTCDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
-
+    if(dueDate === '') {
+      date.innerHTML = `No due date`;
+    } else {
+      date.innerHTML = `Due Date: ${dueDate.getUTCDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+    }
+    
     const edit = document.createElement('img');
     edit.addEventListener('click', editHandler);
     edit.alt = 'Edit';
     edit.id = `edit-task-${taskId}`;
 
     const remove = document.createElement('img');
-    remove.addEventListener('click', removeHandler);
+    remove.addEventListener('click', () => { 
+      document.getElementById(`task-${taskId}`).remove();
+    });
+    remove.dataset.index = taskId;
     remove.alt = 'X';
     remove.id = `remove-task-${taskId}`;
 
@@ -46,12 +53,19 @@ const taskDivFactory = (name, dueDate, taskId, editHandler, removeHandler) => {
 const projectDivFactory = (name, projectId) => {
   const project = document.createElement('li');
   project.id = `project-${projectId}`;
+  project.dataset.index = projectId;
   const projectIcon = document.createElement('img');
   projectIcon.alt = 'O';
   const projectName = document.createElement('span');
   projectName.innerHTML = name;
+  const deleteIcon = document.createElement('img');
+  deleteIcon.alt = 'X';
+  deleteIcon.addEventListener('click', () => {
+    document.getElementById(`project-${projectId}`).remove();
+  })
   project.appendChild(projectIcon);
   project.appendChild(projectName);
+  project.appendChild(deleteIcon);
 
   return project;
 }
