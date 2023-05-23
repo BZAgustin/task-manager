@@ -35,8 +35,8 @@
       <li id="btn-new-project"> <img src="" alt="+"><span>New Project</span> </li>
 
       <div id="input-container">
-        <label for="project-name">Name</label>
-        <input type="text" id="project-name-input">
+        <label for="project-name-input">Name</label>
+        <input type="text" id="project-name-input" required>
         <button id="btn-confirm-project-name">Ok</button>
         <button>Cancel</button>
       </div>
@@ -54,9 +54,10 @@
         <div class="create-task">
           <div class="top">
             <div class="main">
-              <label for="title">Title</label>
-              <input type="text" id="title-input">
-              <label for="description">Description</label>
+              <label for="title-input">Title</label>
+              <input type="text" id="title-input" maxlength="24" required>
+              <label for="description-input" maxlength="64">Description</label>
+              
               <input type="text" id="description-input">
               
             </div>
@@ -73,7 +74,7 @@
 
           <div class="bottom">
             <div>
-              <label for="due-date">Due Date</label>
+              <label for="date-input">Due Date</label>
               <input type="date" id="date-input">
             </div>
             <button type="submit" id="btn-add-task">+ ADD</button>
@@ -90,11 +91,10 @@
     <div class="overlay">
       <div class="top">
         <div class="main">
-          <label for="title">Title</label>
-          <input type="text" id="title-input-edit">
-          <label for="description">Description</label>
-          <input type="text" id="description-input-edit">
-          
+          <label for="title-input-edit">Title</label>
+          <input type="text" id="title-input-edit" maxlength="24" required>
+          <label for="description-input-edit">Description</label>
+          <input type="text" id="description-input-edit" maxlength="64">
         </div>
   
         <div class="side">
@@ -109,7 +109,7 @@
   
       <div class="bottom">
         <div>
-          <label for="due-date">Due Date</label>
+          <label for="date-input-edit">Due Date</label>
           <input type="date" id="date-input-edit">
         </div>
         <button type="submit" id="btn-confirm-edit">CONFIRM</button>
