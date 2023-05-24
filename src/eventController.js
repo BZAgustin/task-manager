@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-use-before-define */
@@ -14,7 +15,7 @@ const defaultProject = new Project('Default');
 
 const projectManager = {
   projects: [],
-  activeProject: defaultProject,
+  activeProject: defaultProject
 }
 
 const taskManager = {
@@ -99,6 +100,10 @@ function showTasks(list) {
   }
 }
 
+function refreshTaskList(newList) {
+  showTasks(newList);
+}
+
 function showProjects(list) {
   while(display.projectListParent.firstChild) {
     display.projectListParent.removeChild(display.projectListParent.firstChild);
@@ -110,15 +115,16 @@ function showProjects(list) {
 
   for(const project of Array.from(display.projectListParent.childNodes)) {
     const remove = project.childNodes[2];
-    const index = remove.dataset.index;
+    const index = project.dataset.index;
     remove.addEventListener('click', () => {
       projectManager.projects.splice(index, 1);
     });
+    project.addEventListener('click', () => {
+      projectManager.activeProject = projectManager.projects[index];
+      refreshTaskList(projectManager.activeProject.myTasks);
+      display.setListTitle(projectManager.activeProject.name);
+    });
   }
-}
-
-function refreshTaskList(newList) {
-  showTasks(newList);
 }
 
 function hookMenuListeners() {
@@ -129,8 +135,8 @@ function hookMenuListeners() {
       const description = display.getDescription();
       const date = new Date(`${display.getDate()}`);
       const task = new Task(name, description, date, taskManager.currentPriority, false);
-      defaultProject.myTasks.push(task);
-      refreshTaskList(defaultProject.myTasks);
+      projectManager.activeProject.myTasks.push(task);
+      refreshTaskList(projectManager.activeProject.myTasks);
       display.container.style.display = 'none';
     }
   });
@@ -141,22 +147,29 @@ function hookMenuListeners() {
       projectManager.projects.push(new Project(name));
       projectManager.activeProject = projectManager.projects[projectManager.projects.length-1];
       showProjects(projectManager.projects);
+      display.setListTitle(projectManager.activeProject.name);
       display.inputContainer.style.display = '';
     }
   });
   
   display.btnInbox.addEventListener('click', () => {
     refreshTaskList(defaultProject.myTasks);
+    projectManager.activeProject = defaultProject;
+    display.setListTitle('INBOX');
   });
   
   display.btnToday.addEventListener('click', () => {
     const todayTasks = getAllTasks().filter(task => isToday(task.dueDate));
     refreshTaskList(todayTasks);
+    projectManager.activeProject = defaultProject;
+    display.setListTitle('TODAY');
   });
   
   display.btnWeek.addEventListener('click', () => {
     const weekTasks = getAllTasks().filter(task => isThisWeek(task.dueDate));
     refreshTaskList(weekTasks);
+    projectManager.activeProject = defaultProject;
+    display.setListTitle('THIS WEEK');
   });
 
   display.btnNewTask.addEventListener('click', () => {
