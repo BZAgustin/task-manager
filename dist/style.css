@@ -1,7 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+:root {
+  --background: #0f1729;
+  --background-2: #47575a;
+  --primary: #a8d63d;
+  --secondary: #c4e3cc;
+  --accent: #35c456;
+  --bg-text: rgb(248, 248, 248);
+  --menu-text: rgb(26, 26, 26);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Roboto Mono';
 }
 
 html, body {
@@ -11,14 +24,43 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
+}
+
+input {
+  font-size: 1.2rem;
+  outline: none;
 }
 
 /* --------------- HEADER --------------- */
 
 header {
-  background-color: aquamarine;
+  padding: 24px;
+  background-color: var(--background-2);
+  background: rgb(71,87,90);
+  background: linear-gradient(90deg, rgba(71,87,90,1) 0%, rgba(71,87,90,0.3) 35%, rgba(71,87,90,0) 90%);
   display: flex;
   align-items: center;
+}
+
+header h1 {
+  color: rgb(255, 66, 82);
+  font-size: 2.1rem;
+  filter: drop-shadow(1px 1px 2px rgb(17, 17, 17));
+}
+
+header img {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(1px 1px 2px rgb(17, 17, 17));
+}
+
+.color1 {
+  color: var(--secondary);
+}
+
+.color2 {
+  color: var(--primary);
 }
 
 /* ----- MAIN ----- */
@@ -36,7 +78,7 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: brown;
+  background-color: var(--background);
   width: 20%;
   min-width: 200px;
 }
@@ -46,7 +88,11 @@ aside section {
   padding: 12px;
   padding-bottom: 24px;
   margin-bottom: 24px;
-  background-color: rgb(177, 91, 91);
+  background: rgb(71,87,90);
+  background: linear-gradient(132deg, rgba(71,87,90,1) 0%, rgba(84,107,101,1) 100%);
+  border-radius: 15px;
+  border: 1px solid rgb(122, 135, 163);
+  box-shadow: 1px 1px 5px black;
 }
 
 aside section h2 {
@@ -55,6 +101,7 @@ aside section h2 {
 }
 
 aside ul {
+  color: var(--bg-text);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,12 +109,32 @@ aside ul {
   list-style-type: none;
 }
 
-aside li {
+aside ul img {
+  width: 24px;
+  height: 24px;
+}
+
+.small {
+  width: 18px;
+  height: 18px;
+  transition: 0.1s;
+}
+
+.small:hover {
+  filter: drop-shadow(0px 0px 1px rgb(15, 15, 15));
+  cursor: pointer;
+}
+
+aside section li {
+  font-size: 1.5rem;
   display: flex;
+  align-items: center;
   gap: 8px;
-  padding: 8px;
-  border: 1px solid black;
-  width: 80%;
+  padding: 12px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
 }
 
 aside li span {
@@ -76,17 +143,90 @@ aside li span {
   justify-content: center;
 }
 
+aside li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.btn {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+  border: none;
+}
+
+.btn:hover, .btn2:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 1px 1px 5px rgb(17, 17, 17);
+}
+
+#btn-new-project { 
+  width: 70%;
+  min-width: 250px;
+}
+
+.btn img, .btn3 img {
+  width: 18px;
+  height: 18px;
+}
+
+.btn2, .btn3 {
+  color: var(--bg-text);
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+  border: none;
+}
+
+.btn3 {
+  background-color: #407c4e6c;
+  font-size: 1.5rem;
+  display: flex;
+  gap: 12px;
+}
+
+.btn3:hover {
+  cursor: pointer;
+  background-color: rgba(0, 255, 55, 0.349);
+}
+
+
+.color3 {
+ color:rgb(255, 66, 82);
+}
+
 #input-container {
+  color: var(--bg-text);
+  display: flex;
+  flex-direction: column;
   margin-top: 18px;
   padding: 8px;
-  background-color: rgb(112, 43, 43);
+  background-color: rgba(0, 0, 0, 0.2);
   display: none;
   justify-content: space-around;
+  align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 #input-container input {
-  width: 50%;
+  width: 70%;
+}
+
+#input-container div {
+  display: flex;
+  gap: 12px;
 }
 
 /* --------------- TASK CONTAINER --------------- */
@@ -96,14 +236,18 @@ aside li span {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: chocolate;
+  background-color: var(--background);
   flex: 1;
   gap: 12px;
 }
 
+.task-container h1 {
+  color: var(--bg-text);
+}
+
 .task-list {
   padding: 12px;
-  background-color: cornsilk;
+  background-color: var(--secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,7 +274,9 @@ aside li span {
 
 .create-task, .overlay {
   padding: 12px;
-  background-color: rgb(183, 231, 231);
+  padding-left: 36px;
+  background-color: var(--background-2);
+  border-radius: 15px;
   display: none;
   flex-direction: column;
   gap: 24px;
@@ -164,6 +310,31 @@ aside li span {
   gap: 12px;
 }
 
+.priority button {
+  font-weight: bold;
+  background-color: var(--secondary);
+  padding: 2px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: 0.2s;
+}
+
+.priority button:hover {
+  cursor: pointer;
+}
+
+.priority-low:hover {
+  border: solid 2px #35c456;
+}
+
+.priority-mid:hover {
+  border: solid 2px #ffae00;
+}
+
+.priority-high:hover {
+  border: solid 2px #e72626;
+}
+
 .bottom {
   display: flex;
   justify-content: center;
@@ -172,17 +343,11 @@ aside li span {
   gap: 3rem;
 }
 
-#btn-add {
-  padding: 8px;
-  width: 20%;
-}
-
-
 /* --------------- FOOTER --------------- */
 
 footer {
   text-align: center;
-  background-color: darkgreen;
+  background-color: var(--background-2);
 }
 
 /* --------------- OVERLAY --------------- */

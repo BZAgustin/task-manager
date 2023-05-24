@@ -10,74 +10,77 @@
 </head>
 <body>
   <header>
-    <img src="" alt="Logo" srcset="">
-    <h1>Title</h1>
+    <img src="./assets/logo.png" alt="Logo" srcset="">
+    <h1> <span class="color1">task</span><span class="color2">Manager</span>()</h1>
   </header>
 
   <main>
     <aside>
       <section>
-        <h2> Main </h2>
+        <h2> // <span class="color2">TASKS</span></h2>
         <ul>
-          <li id="btn-inbox"> <img src="" alt="X"><span>INBOX</span> </li>
-          <li id="btn-today"> <img src="" alt="X"><span>TODAY</span> </li>
-          <li id="btn-week"> <img src="" alt="X"><span>THIS WEEK</span> </li>
+          <li id="btn-inbox"> <span><img src="./assets/calendar.png" alt="X"><span>INBOX</span></span> </li>
+          <li id="btn-today"> <span><img src="./assets/calendar.png" alt="X"><span>TODAY</span></span> </li>
+          <li id="btn-week">  <span><img src="./assets/calendar.png" alt="X"><span>THIS WEEK</span></span> </li>
         </ul>
       </section>
       
       <section>
-        <h2> Projects </h2>
+        <h2>// <span class="color2">PROJECTS</span></h2>
         <ul id="project-list">
          <!-- Projects go here -->
         </ul>
       </section>
 
-      <li id="btn-new-project"> <img src="" alt="+"><span>New Project</span> </li>
+      <div class="btn" id="btn-new-project"><img src="./assets/add.png" alt="+"><span><span class="color1"> new </span><span class="color2">Project</span><span class="color3">()</span></span></div>
 
       <div id="input-container">
-        <label for="project-name-input">Name</label>
-        <input type="text" id="project-name-input" required>
-        <button id="btn-confirm-project-name">Ok</button>
-        <button>Cancel</button>
+        <label for="project-name-input">Project name:</label>
+        <input type="text" placeholder="Housekeeping" id="project-name-input" required>
+        <div>
+          <button class="btn2" id="btn-confirm-project-name">Ok</button>
+          <button class="btn2" id="cancel-project">Cancel</button>
+        </div>
+        
       </div>
     </aside>
 
     <div class="task-container">
-      <h1 id="task-list-title">Inbox</h1>
+      <h1 id="task-list-title">INBOX</h1>
 
       <section class="task-list">
         <!-- Tasks go here -->
       </section>
 
-      <button id="btn-new-task">+ Add Task</button>
+      <button class ="btn" id="btn-new-task"><img src="./assets/add.png" alt="+"><span><span class="color1"> new </span><span class="color2">Task</span><span class="color3">()</span></span></button>
 
         <div class="create-task">
           <div class="top">
             <div class="main">
-              <label for="title-input">Title</label>
-              <input type="text" id="title-input" maxlength="24" required>
-              <label for="description-input" maxlength="64">Description</label>
+              <label for="title-input"><b>Name</b></label>
+              <input type="text" id="title-input" maxlength="24" placeholder="'Do laundry', 'Attend meeting', ..." required>
+              <label for="description-input" maxlength="64"><b>Description</b></label>
               
-              <input type="text" id="description-input">
+              <input type="text" placeholder="I better do this quick!" id="description-input">
               
             </div>
 
             <div class="side">
               <div class="priority">
                 <h3>Priority</h3>
-                <button id="btn-low">Low</button>
-                <button id="btn-mid">Mid</button>
-                <button id="btn-high">High</button>
+                <button class="priority-low" id="btn-low">Low</button>
+                <button class="priority-mid" id="btn-mid">Mid</button>
+                <button class="priority-high" id="btn-high">High</button>
               </div>
             </div>
           </div>
 
           <div class="bottom">
             <div>
-              <label for="date-input">Due Date</label>
+              <label for="date-input"><b>Due Date</b> </label>
               <input type="date" id="date-input">
             </div>
-            <button type="submit" id="btn-add-task">+ ADD</button>
+            <button type="submit" class="btn3" id="btn-add-task"> <img src="./assets/add.png" alt="+"> ADD</button>
           </div>
         </div>
     </div>
@@ -100,9 +103,9 @@
         <div class="side">
           <div class="priority">
             <h3>Priority</h3>
-            <button id="btn-low-edit">Low</button>
-            <button id="btn-mid-edit">Mid</button>
-            <button id="btn-high-edit">High</button>
+            <button class="priority-low" id="btn-low-edit">Low</button>
+            <button class="priority-mid" id="btn-mid-edit">Mid</button>
+            <button class="priority-high" id="btn-high-edit">High</button>
           </div>
         </div>
       </div>
