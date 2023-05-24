@@ -29,10 +29,14 @@ const taskDivFactory = (name, dueDate, taskId, editHandler) => {
     
     const edit = document.createElement('img');
     edit.addEventListener('click', editHandler);
+    edit.classList.add('small');
+    edit.src = './assets/edit.png';
     edit.alt = 'Edit';
     edit.id = `edit-task-${taskId}`;
 
     const remove = document.createElement('img');
+    remove.classList.add('small');
+    remove.src = './assets/remove.png';
     remove.addEventListener('click', () => { 
       document.getElementById(`task-${taskId}`).remove();
     });
@@ -55,10 +59,13 @@ const projectDivFactory = (name, projectId) => {
   project.id = `project-${projectId}`;
   project.dataset.index = projectId;
   const projectIcon = document.createElement('img');
+  projectIcon.src = './assets/project.png';
   projectIcon.alt = 'O';
   const projectName = document.createElement('span');
   projectName.innerHTML = name;
   const deleteIcon = document.createElement('img');
+  deleteIcon.classList.add('small');
+  deleteIcon.src = './assets/remove.png';
   deleteIcon.alt = 'X';
   deleteIcon.addEventListener('click', () => {
     document.getElementById(`project-${projectId}`).remove();
@@ -83,6 +90,7 @@ const DOM = () => {
   const btnConfirmProject = document.getElementById('btn-confirm-project-name');
 
   // Task List
+  const listTitle = document.getElementById('task-list-title');
   const btnNewTask = document.getElementById('btn-new-task');
 
   // 'Create Task' Form
@@ -102,6 +110,9 @@ const DOM = () => {
   const descriptionEdit = document.getElementById('description-input-edit');
   const dateEdit = document.getElementById('date-input-edit');
   const btnConfirmEdit = document.getElementById('btn-confirm-edit');
+  const btnLowEdit = document.getElementById('btn-low-edit');
+  const btnMidEdit = document.getElementById('btn-high-edit');
+  const btnHighEdit = document.getElementById('btn-high-edit');
 
   // Parent Nodes
   const projectListParent = document.getElementById('project-list');
@@ -137,9 +148,13 @@ const DOM = () => {
     date.value = newDate;
   }
 
+  function setListTitle(newTitle) {
+    listTitle.innerHTML = newTitle;
+  }
+
   return { btnInbox, btnToday, btnWeek, btnNewProject, container, inputContainer, projectNameInput, taskOverlay, btnConfirmProject, btnNewTask,
            btnLow, btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTaskName, setTaskName, getProjectName, getDescription, 
-           setDescription, getDate, setDate, titleEdit, taskDivFactory, projectDivFactory, descriptionEdit, dateEdit, btnConfirmEdit };
+           setDescription, getDate, setDate, titleEdit, taskDivFactory, projectDivFactory, descriptionEdit, dateEdit, btnLowEdit, btnMidEdit, btnHighEdit, btnConfirmEdit, setListTitle };
 };
 
 export default DOM;
