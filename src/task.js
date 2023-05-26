@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 class Task {
   constructor(name, description, dueDate, priority, completed = false) {
     this.name = name;

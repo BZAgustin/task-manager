@@ -1,11 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-loop-func */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-restricted-syntax */
-
 import DOM from './display';
 import Task from './task';
 import Project from './project';

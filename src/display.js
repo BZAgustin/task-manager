@@ -1,6 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-restricted-syntax */
-
 const taskDivFactory = (name, description, dueDate, priority, completed, taskId, editHandler) => {
     const task = document.createElement('div');
     task.classList.add('task');
