@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="./main.js" defer></script>
   <link rel="stylesheet" href="style.css">
-  <title>To-Do App</title>
+  <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+  <title>Task Manager</title>
 </head>
 <body>
   <header>
@@ -19,7 +20,7 @@
       <section>
         <h2> // <span class="color2">TASKS</span></h2>
         <ul>
-          <li id="btn-inbox"> <span><img src="./assets/calendar.png" alt="X"><span>INBOX</span></span> </li>
+          <li id="btn-inbox"> <span><img src="./assets/inbox.svg" alt="X"><span>INBOX</span></span> </li>
           <li id="btn-today"> <span><img src="./assets/calendar.png" alt="X"><span>TODAY</span></span> </li>
           <li id="btn-week">  <span><img src="./assets/calendar.png" alt="X"><span>THIS WEEK</span></span> </li>
         </ul>
@@ -89,7 +90,8 @@
   </main>
   
   <footer>
-    <h1>by Colorex</h1>
+    <h3>Copyright © 2023 <a href="https://github.com/bzagustin"> <span class="color1">bz</span><span class="color2">Agustin</span></a></h3>
+    <a href="https://github.com/bzagustin"><img src="./assets/github.png" alt="@GitHub"></a>
   </footer>
 
   <div class="overlay-container">
@@ -117,7 +119,8 @@
           <label for="date-input-edit">Due Date</label>
           <input type="date" id="date-input-edit">
         </div>
-        <button type="submit" id="btn-confirm-edit">CONFIRM</button>
+        <button type="submit" class="btn3" id="btn-confirm-edit">CONFIRM</button>
+        <button type="submit" class="btn3" id="btn-cancel-edit">CANCEL</button>
       </div>
     </div>
   </div>
