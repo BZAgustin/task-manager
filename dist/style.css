@@ -23,6 +23,7 @@ html, body {
 
 body {
   display: flex;
+  flex: 1;
   flex-direction: column;
   background-color: var(--background);
 }
@@ -67,13 +68,13 @@ header img {
 
 main {
   display: flex;
-  height: 100%;
 }
 
 /* --------------- SIDEBAR --------------- */
 
 
 aside {
+  color: white;
   padding: 24px 8px;
   display: flex;
   flex-direction: column;
@@ -125,7 +126,7 @@ aside ul img {
   cursor: pointer;
 }
 
-aside section li {
+aside section li, aside section li div {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
@@ -137,15 +138,25 @@ aside section li {
   transition: 0.3s;
 }
 
+aside section li div {
+  padding: 0;
+  background-color: rgba(0, 0, 0 ,0);
+}
+
 aside li span {
   display: flex;
   flex: 1;
   justify-content: center;
+  align-items: center;
 }
 
 aside li:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
+}
+
+aside section h2, footer h3 {
+  filter: drop-shadow(1px 1px 1px black);
 }
 
 .btn {
@@ -191,7 +202,7 @@ aside li:hover {
 
 .btn3 {
   background-color: #407c4e6c;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: flex;
   gap: 12px;
 }
@@ -201,6 +212,13 @@ aside li:hover {
   background-color: rgba(0, 255, 55, 0.349);
 }
 
+#btn-cancel-task, #btn-cancel-edit {
+  background-color: #ff373767;
+}
+
+#btn-cancel-task:hover, #btn-cancel-edit:hover {
+  background-color: #ff8080;
+}
 
 .color3 {
  color:rgb(255, 66, 82);
@@ -230,6 +248,11 @@ aside li:hover {
 }
 
 /* --------------- TASK CONTAINER --------------- */
+
+main {
+  display: flex;
+  flex-grow: 1;
+}
 
 .task-container {
   padding: 36px 0px;
@@ -266,8 +289,36 @@ aside li:hover {
 
 .left-section, .right-section {
   display: flex;
+  align-items: center;
   gap: 12px;
+}
 
+.task-span {
+  font-size: 0.7rem;
+}
+
+.divisor {
+  width: 1px;
+  background-color: rgb(123, 143, 125);
+  height: 24px;
+}
+
+.priority-0, .priority-1, .priority-2 {
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.priority-0 {
+  background-color:#35c456;
+}
+
+.priority-1 {
+  background-color: #ffae00;
+}
+
+.priority-2 {
+  background-color: #e72626;
 }
 
 /* ----- CREATE TASK CARD ----- */
@@ -312,7 +363,6 @@ aside li:hover {
 
 .priority button {
   font-weight: bold;
-  background-color: var(--secondary);
   padding: 2px;
   border-radius: 5px;
   border: 2px solid rgba(0, 0, 0, 0);
@@ -324,7 +374,7 @@ aside li:hover {
 }
 
 .priority-low:hover {
-  border: solid 2px #35c456;
+  border: solid 2px #27bb49;
 }
 
 .priority-mid:hover {
@@ -335,19 +385,58 @@ aside li:hover {
   border: solid 2px #e72626;
 }
 
+.priority-low-on, .priority-mid-on, .priority-high-on {
+  color: white;
+}
+
+.priority-low-on {
+  background-color: rgb(0, 189, 57);
+}
+
+.priority-mid-on {
+  background-color: rgb(255, 196, 0);
+}
+
+.priority-high-on {
+  background-color: rgb(201, 48, 48);
+}
+
 .bottom {
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 3rem;
+  gap: 2.3rem;
 }
 
 /* --------------- FOOTER --------------- */
 
 footer {
-  text-align: center;
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
   background-color: var(--background-2);
+}
+
+footer img {
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  transition: 0.2s;
+}
+
+footer img:hover {
+  padding: 1px;
+  background-color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: white !important;
 }
 
 /* --------------- OVERLAY --------------- */
