@@ -1,12 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 class Task {
-  constructor(name, description, dueDate, priority, completed, visible = false) {
+  constructor(name, description, dueDate, priority, completed = false) {
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
     this.completed = completed;
-    this.visible = visible;
   }
 
   get name() {
@@ -47,14 +46,6 @@ class Task {
 
   set completed(complete) {
     this._completed = complete;
-  }
-
-  get visible() {
-    return this._visible;
-  }
-
-  set visible(mode) {
-    this._visible = mode;
   }
 }
 
