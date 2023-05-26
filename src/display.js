@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
-const taskDivFactory = (name, dueDate, taskId, editHandler) => {
+const taskDivFactory = (name, description, dueDate, priority, completed, taskId, editHandler) => {
     const task = document.createElement('div');
     task.classList.add('task');
     task.id = `task-${taskId}`;
+    task.dataset.index = taskId;
 
     const leftSection = document.createElement('div');
     const rightSection = document.createElement('div');
@@ -13,12 +14,37 @@ const taskDivFactory = (name, dueDate, taskId, editHandler) => {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.checked = completed;
     checkbox.id = `task-${taskId}-checkbox`;
-    const label = document.createElement('label');
-    label.innerHTML = name;
+    const labelName = document.createElement('h3');
+    labelName.innerHTML = name;
+    labelName.id = `task-${taskId}-name`;
+    const labelDesc = document.createElement('span');
+    labelDesc.className = 'task-span';
+    labelDesc.innerHTML = description;
+
+    if(completed) {
+      labelName.style.textDecoration = 'line-through';
+      labelName.style.color = 'gray';
+    }
 
     leftSection.appendChild(checkbox);
-    leftSection.appendChild(label);
+    leftSection.appendChild(labelName);
+    leftSection.appendChild(labelDesc);
+
+    const priorityLib = {
+      0: "LOW",
+      1: "MID",
+      2: "HIGH"
+    };
+
+    const labelPriority = document.createElement('span');
+    labelPriority.className = 'task-span';
+    labelPriority.classList.add(`priority-${priority}`);
+    labelPriority.innerHTML = `${priorityLib[priority]} PRIORITY`;
+
+    const divisor = document.createElement('div');
+    divisor.className = 'divisor';
 
     const date = document.createElement('span');
     if(dueDate === '') {
@@ -37,13 +63,12 @@ const taskDivFactory = (name, dueDate, taskId, editHandler) => {
     const remove = document.createElement('img');
     remove.classList.add('small');
     remove.src = './assets/remove.png';
-    remove.addEventListener('click', () => { 
-      document.getElementById(`task-${taskId}`).remove();
-    });
     remove.dataset.index = taskId;
     remove.alt = 'X';
     remove.id = `remove-task-${taskId}`;
 
+    rightSection.appendChild(labelPriority);
+    rightSection.appendChild(divisor);
     rightSection.appendChild(date);
     rightSection.appendChild(edit);
     rightSection.appendChild(remove);
@@ -57,7 +82,8 @@ const taskDivFactory = (name, dueDate, taskId, editHandler) => {
 const projectDivFactory = (name, projectId) => {
   const project = document.createElement('li');
   project.id = `project-${projectId}`;
-  project.dataset.index = projectId;
+  const leftContainer = document.createElement('div');
+  leftContainer.dataset.index = projectId;
   const projectIcon = document.createElement('img');
   projectIcon.src = './assets/project.png';
   projectIcon.alt = 'O';
@@ -67,11 +93,10 @@ const projectDivFactory = (name, projectId) => {
   deleteIcon.classList.add('small');
   deleteIcon.src = './assets/remove.png';
   deleteIcon.alt = 'X';
-  deleteIcon.addEventListener('click', () => {
-    document.getElementById(`project-${projectId}`).remove();
-  })
-  project.appendChild(projectIcon);
-  project.appendChild(projectName);
+ 
+  leftContainer.appendChild(projectIcon);
+  leftContainer.appendChild(projectName);
+  project.appendChild(leftContainer);
   project.appendChild(deleteIcon);
 
   return project;
@@ -88,6 +113,7 @@ const DOM = () => {
   const inputContainer = document.getElementById('input-container');
   const projectNameInput = document.getElementById('project-name-input');
   const btnConfirmProject = document.getElementById('btn-confirm-project-name');
+  const btnCancelProject = document.getElementById('cancel-project');
 
   // Task List
   const listTitle = document.getElementById('task-list-title');
@@ -102,6 +128,7 @@ const DOM = () => {
   const btnMid = document.getElementById('btn-mid');
   const btnHigh = document.getElementById('btn-high');
   const btnAddTask = document.getElementById('btn-add-task');
+  const btnCancelTask = document.getElementById('btn-cancel-task');
 
 
   // 'Edit Task' Form
@@ -109,10 +136,11 @@ const DOM = () => {
   const titleEdit = document.getElementById('title-input-edit');
   const descriptionEdit = document.getElementById('description-input-edit');
   const dateEdit = document.getElementById('date-input-edit');
-  const btnConfirmEdit = document.getElementById('btn-confirm-edit');
   const btnLowEdit = document.getElementById('btn-low-edit');
-  const btnMidEdit = document.getElementById('btn-high-edit');
+  const btnMidEdit = document.getElementById('btn-mid-edit');
   const btnHighEdit = document.getElementById('btn-high-edit');
+  const btnConfirmEdit = document.getElementById('btn-confirm-edit');
+  const btnCancelEdit = document.getElementById('btn-cancel-edit');
 
   // Parent Nodes
   const projectListParent = document.getElementById('project-list');
@@ -124,6 +152,14 @@ const DOM = () => {
   }
 
   // Methods (tasks)
+  function taskListAdd(task) {
+    taskListParent.appendChild(task);
+  }
+  
+  function projectListAdd(project) {
+    projectListParent.appendChild(project);
+  }
+
   function getTaskName() {
     return title.value;
   }
@@ -152,9 +188,55 @@ const DOM = () => {
     listTitle.innerHTML = newTitle;
   }
 
-  return { btnInbox, btnToday, btnWeek, btnNewProject, container, inputContainer, projectNameInput, taskOverlay, btnConfirmProject, btnNewTask,
-           btnLow, btnMid, btnHigh, btnAddTask, projectListParent, taskListParent, getTaskName, setTaskName, getProjectName, getDescription, 
-           setDescription, getDate, setDate, titleEdit, taskDivFactory, projectDivFactory, descriptionEdit, dateEdit, btnLowEdit, btnMidEdit, btnHighEdit, btnConfirmEdit, setListTitle };
+  function updatePriority(low, mid, high, priority) {
+    if(priority === 0) {
+      low.classList.add('priority-low-on');
+      mid.classList.remove('priority-mid-on');
+      high.classList.remove('priority-high-on');
+    } else if(priority === 1) {
+      mid.classList.add('priority-mid-on');
+      low.classList.remove('priority-low-on');
+      high.classList.remove('priority-high-on');
+    } else if(priority === 2) {
+      high.classList.add('priority-high-on');
+      low.classList.remove('priority-low-on');
+      mid.classList.remove('priority-mid-on');
+    } else {
+      high.classList.remove('priority-high-on');
+      low.classList.remove('priority-low-on');
+      mid.classList.remove('priority-mid-on');
+    }
+  }
+
+  
+  function clearFields() {
+    setTaskName('');
+    setDescription('');
+    setDate('');
+    updatePriority(btnLow, btnMid, btnHigh, '');
+    updatePriority(btnLowEdit, btnMidEdit, btnHighEdit, '');
+  }
+  
+  function showTaskListPlaceholder() {
+    const text = document.createElement('h2');
+    text.innerHTML = 'Nothing here...';
+    text.style.color = 'gray';
+    taskListParent.appendChild(text);
+  }
+
+  function showProjectListPlaceholder() {
+    const text = document.createElement('h2');
+    text.innerHTML = 'Nothing here...';
+    projectListParent.appendChild(text);
+  }
+
+  return { taskDivFactory, projectDivFactory, btnInbox, btnToday, btnWeek, btnNewProject, container, 
+           inputContainer, projectNameInput, btnConfirmProject, btnCancelProject, btnNewTask, btnLow, btnMid,  
+           btnHigh, btnAddTask, btnCancelTask, projectListParent, taskListParent, taskOverlay, 
+           taskListAdd, projectListAdd, getTaskName, setTaskName, getProjectName, getDescription,  
+           setDescription, getDate, setDate, titleEdit, descriptionEdit, dateEdit, btnLowEdit, btnMidEdit, 
+           btnHighEdit, btnConfirmEdit, btnCancelEdit, setListTitle, updatePriority, clearFields, 
+           showTaskListPlaceholder, showProjectListPlaceholder };
 };
 
 export default DOM;
