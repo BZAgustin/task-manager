@@ -1,3 +1,8 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-restricted-syntax */
 import DOM from './display';
 import Task from './task';
 import Project from './project';
@@ -200,6 +205,15 @@ function refreshTaskList(newList) {
   showTasks(newList);
 }
 
+function sortByPriority(unorderedList) {
+  const high = unorderedList.filter(item => item.priority === 2);
+  const mid = unorderedList.filter(item => item.priority === 1);
+  const low = unorderedList.filter(item => item.priority === 0);
+  
+  const orderedList = high.concat(mid, low);
+  refreshTaskList(orderedList);
+}
+
 function showProjects(list) {
   while(display.projectListParent.firstChild) {
     display.projectListParent.removeChild(display.projectListParent.firstChild);
@@ -253,6 +267,10 @@ function hookMenuListeners() {
 
   display.btnNewTask.addEventListener('click', () => {
     display.container.style.display = 'flex';
+  });
+
+  display.btnSort.addEventListener('click', () => {
+    sortByPriority(projectManager.activeProject.myTasks);
   });
 
   display.btnNewProject.addEventListener('click', () => {

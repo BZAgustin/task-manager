@@ -115,6 +115,7 @@ const DOM = () => {
   // Task List
   const listTitle = document.getElementById('task-list-title');
   const btnNewTask = document.getElementById('btn-new-task');
+  const btnSort = document.getElementById('btn-sort');
 
   // 'Create Task' Form
   const container = document.querySelector('.create-task');
@@ -228,7 +229,7 @@ const DOM = () => {
   }
 
   return { taskDivFactory, projectDivFactory, btnInbox, btnToday, btnWeek, btnNewProject, container, 
-           inputContainer, projectNameInput, btnConfirmProject, btnCancelProject, btnNewTask, btnLow, btnMid,  
+           inputContainer, projectNameInput, btnConfirmProject, btnCancelProject, btnNewTask, btnSort, btnLow, btnMid,  
            btnHigh, btnAddTask, btnCancelTask, projectListParent, taskListParent, taskOverlay, 
            taskListAdd, projectListAdd, getTaskName, setTaskName, getProjectName, getDescription,  
            setDescription, getDate, setDate, titleEdit, descriptionEdit, dateEdit, btnLowEdit, btnMidEdit, 
