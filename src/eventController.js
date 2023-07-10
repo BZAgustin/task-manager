@@ -87,6 +87,7 @@ function confirmEditHandler() {
   const task = taskManager.activeTask;
   task.name = display.titleEdit.value;
   task.description = display.descriptionEdit.value;
+  task.priority = taskManager.currentPriority;
   task.date = display.dateEdit.value;
   refreshTaskList(projectManager.activeProject.myTasks);
   saveProjects(projectManager.projects, defaultProject);
